@@ -37,25 +37,28 @@ def init(appConfig):
 
 def dispatch(rpcXml):
    """
-   send the rpc payload (sync), reset the connection manager (ncMgr) on Exception 
+   send the rpc payload (sync), reset connection manager (ncMgr) on Exception 
    """
    try:
       rspXml = ncMgr.dispatch(et.fromstring(rpcXml)).xml
+      return True
    except RPCError as e:
       rspXml = e.xml
    except Exception as e:
-      logger.info('retrying to connect to remote host ...')
+      logger.info('trying to re-connect to remote host ...')
       resetMgr()
       raise Exception()
 
    if et.iselement(rspXml):
       rspXml = et.tostring(rspXml, pretty_print=True).decode()
 
+   rspOutput = ''
    try:
-      rspOutput = et.tostring(et.fromstring(data.encode('utf-8')),
+      rspOutput = et.tostring(et.fromstring(rspXml.encode('utf-8')),
                               pretty_print=True).decode()
-   except Exception:
-      pass
+   except Exception as e:
+      logger.error(e)
 
-   print(rspOutput)
+   logger.info(rspOutput)
+   return False
 

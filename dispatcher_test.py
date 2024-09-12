@@ -21,3 +21,22 @@ def test_connToRemote(appConfig):
    appConfig['HOST'] = host
    assert m.init(appConfig) == True
 
+def test_dispatch(appConfig):
+   m.init(appConfig)
+
+   assert m.dispatch('''
+<edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <target>
+    <candidate/>
+  </target>
+  <config>
+    <interfaces xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-um-interface-cfg">
+      <interface>
+        <interface-name>Loopback9119</interface-name>
+        <description>*** NC.py ***</description>
+      </interface>
+    </interfaces>
+  </config>
+</edit-config>
+''') == True
+
