@@ -1,0 +1,66 @@
+module: Cisco-IOS-XR-um-interface-cfg
+  +--rw interfaces
+     +--rw interface* [interface-name]
+     |  +--rw interface-name        xr:Interface-name
+     |  +--rw sub-interface-type
+     |  |  +--rw l2transport!
+     |  |  +--rw point-to-point!
+     |  |  +--rw multipoint!
+     |  +--rw ipv4
+     |  +--rw ipv6
+     |  +--rw dampening!
+     |  |  +--rw decay-half-life!
+     |  |     +--rw value              uint32
+     |  |     +--rw reuse-threshold!
+     |  |        +--rw value                 uint32
+     |  |        +--rw suppress-threshold!
+     |  |           +--rw value                uint32
+     |  |           +--rw max-suppress-time!
+     |  |              +--rw value              uint32
+     |  |              +--rw restart-penalty!
+     |  |                 +--rw value    uint32
+     |  +--rw encapsulation
+     |  |  +--rw ppp!
+     |  |  +--rw hdlc!
+     |  |  +--rw mfr!
+     |  |  +--rw frame-relay!
+     |  |     +--rw IETF!
+     |  +--rw shutdown!
+     |  +--rw mtu?                  uint32
+     |  +--rw logging
+     |  |  +--rw events
+     |  |     +--rw link-status!
+     |  +--rw bandwidth?            uint32
+     |  +--rw description?          string
+     +--rw interface-preconfigure* [interface-name]
+        +--rw interface-name        xr:Interface-name
+        +--rw sub-interface-type
+        |  +--rw l2transport!
+        |  +--rw point-to-point!
+        |  +--rw multipoint!
+        +--rw ipv4
+        +--rw ipv6
+        +--rw dampening!
+        |  +--rw decay-half-life!
+        |     +--rw value              uint32
+        |     +--rw reuse-threshold!
+        |        +--rw value                 uint32
+        |        +--rw suppress-threshold!
+        |           +--rw value                uint32
+        |           +--rw max-suppress-time!
+        |              +--rw value              uint32
+        |              +--rw restart-penalty!
+        |                 +--rw value    uint32
+        +--rw encapsulation
+        |  +--rw ppp!
+        |  +--rw hdlc!
+        |  +--rw mfr!
+        |  +--rw frame-relay!
+        |     +--rw IETF!
+        +--rw shutdown!
+        +--rw mtu?                  uint32
+        +--rw logging
+        |  +--rw events
+        |     +--rw link-status!
+        +--rw bandwidth?            uint32
+        +--rw description?          string
