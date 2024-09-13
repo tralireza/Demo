@@ -28,6 +28,7 @@ def init(appConfig):
                                  username=appConfig['USR'], password=appConfig['PASSWD'],
                                  hostkey_verify=False, allow_agent=False,
                                  device_params={'name': 'iosxr'})
+         logger.info('connected to "%s"' % appConfig['HOST'])
       except Exception as e:
          logger.error(e)
 
@@ -39,6 +40,7 @@ def dispatch(rpcXml):
    """
    send the rpc payload (sync), reset connection manager (ncMgr) on Exception 
    """
+   logger.debug('+dispatching RCP paylad: %s' % rpcXml)
    try:
       rspXml = ncMgr.dispatch(et.fromstring(rpcXml)).xml
       return True
