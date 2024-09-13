@@ -3,30 +3,33 @@ import logging
 import pytest
 import os
 
+
 @pytest.fixture()
 def appConfig():
-   appConfig = {
+    appConfig = {
          'HOST': os.getenv('HOST', '127.0.0.1'),
          'USR': os.getenv('USR', ''),
          'PASSWD': os.getenv('PASSWD', ''),
-         }  
+         }
 
-   yield appConfig
+    yield appConfig
+
 
 def test_connToRemote(appConfig):
-   host = appConfig['HOST']
+    host = appConfig['HOST']
 
-   appConfig['HOST'] = '127.0.0.1'
-   assert m.init(appConfig) == False
+    appConfig['HOST'] = '127.0.0.1'
+    assert m.init(appConfig) == False
 
-   appConfig['HOST'] = host
-   assert m.init(appConfig) == True
+    appConfig['HOST'] = host
+    assert m.init(appConfig) == True
+
 
 def test_dispatch(appConfig):
-   m.logger.setLevel(logging.DEBUG)
+    m.logger.setLevel(logging.DEBUG)
 
-   m.init(appConfig)
-   assert m.dispatch('''
+    m.init(appConfig)
+    assert m.dispatch('''
 <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="%i">
   <target>
     <candidate/>
@@ -40,5 +43,4 @@ def test_dispatch(appConfig):
     </interfaces>
   </config>
 </edit-config>
-'''%(1234, 9191)) == True
-
+''' % (1234, 9191)) == True
