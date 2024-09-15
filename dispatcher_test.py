@@ -1,32 +1,31 @@
-import dispatcher as m
 import logging
+
 import pytest
-import os
+
+import env
+import dispatcher as m
+
+
+m.logger.setLevel(logging.DEBUG)
 
 
 @pytest.fixture()
 def appConfig():
-    appConfig = {
-         'HOST': os.getenv('HOST', '127.0.0.1'),
-         'USR': os.getenv('USR', ''),
-         'PASSWD': os.getenv('PASSWD', ''),
-         }
-
+    appConfig = env.appConfig
     yield appConfig
 
 
-def test_connToRemote(appConfig):
+def test_connect(appConfig):
     host = appConfig['HOST']
 
     appConfig['HOST'] = '127.0.0.1'
-    assert m.init(appConfig) == False
+    assert m.init(appConfig) is False
 
     appConfig['HOST'] = host
-    assert m.init(appConfig) == True
+    assert m.init(appConfig) is True
 
 
 def test_dispatch(appConfig):
-    m.logger.setLevel(logging.DEBUG)
 
     m.init(appConfig)
     assert m.dispatch('''
@@ -43,4 +42,4 @@ def test_dispatch(appConfig):
     </interfaces>
   </config>
 </edit-config>
-''' % (1234, 9191)) == True
+''' % (1234, 9191)) is True
