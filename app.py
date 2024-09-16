@@ -2,6 +2,7 @@ import json
 import logging
 
 from flask import Flask
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 import env
 import mod_nc as nc
@@ -14,7 +15,9 @@ logger.setLevel(logging.INFO)
 
 logger.info('starting...')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
+app.wsgi_app = ProxyFix(app.wsgi_app)
+
 app.register_blueprint(nc.bp)
 app.register_blueprint(cli.bp)
 
