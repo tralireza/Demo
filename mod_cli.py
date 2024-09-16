@@ -36,7 +36,7 @@ def init(appConfig):
     return reset()
 
 
-@bp.get('/ifs')
+@bp.get('/ifs')  # ifs as interfaces (including Loopback)
 def ifs():
     try:
         return mgr.send_command('show interfaces brief'), 200

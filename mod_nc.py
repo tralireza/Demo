@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 state = State()
 
 
-@bp.post('/lif')
+@bp.post('/lfs')  # lfs as Loopback interfaces
 def lifCreate():
     """
     create a Loopback interface with a number provided in POST json request
@@ -52,7 +52,7 @@ def lifCreate():
     return '', 500
 
 
-@bp.route('/lif/<int:number>', methods=['DELETE'])
+@bp.route('/lfs/<int:number>', methods=['DELETE'])
 def lifDelete(number):
     rpcXml = Payload[IF_DEL] % (state.Inc(), 'Loopback%i' % number)
     if state.dryrun:
