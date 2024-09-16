@@ -17,6 +17,11 @@ def init(appConfig):
         closure on appConfig to reset connecting in case of connection loss
         """
         global mgr
+        if mgr:
+            try:
+                mgr.disconnect()
+            except Exception:
+                pass
         mgr = None
         try:
             mgr = ConnectHandler(port=22,
@@ -38,7 +43,7 @@ def ifs():
     except Exception as e:
         logger.error(e)
         reset()
-    return '', 500
+    return '', 504
 
 
 @bp.get('/version')
@@ -48,4 +53,4 @@ def version():
     except Exception as e:
         logger.error(e)
         reset()
-    return '', 500
+    return '', 504
