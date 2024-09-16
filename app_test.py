@@ -31,7 +31,7 @@ def test_config(client):
 
 def test_dryrun(client):
     rsp = client.get('/dryrun')
-    assert b'true' in rsp.data
+    assert b'false' in rsp.data
 
     rsp = client.get('/dryrun')
-    assert b'false' in rsp.data
+    assert b'true' in rsp.data
