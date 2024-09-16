@@ -7,3 +7,7 @@ services:
   app:
     image: app
     network_mode: "host"
+    environment:
+      - HOST=sandbox-iosxr-1.cisco.com
+      - USR=admin
+      - PASSWD=C1sco12345
