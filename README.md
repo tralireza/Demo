@@ -1,4 +1,4 @@
-# NetConf Demo
+# NetConf Demo [![Pylint](https://github.com/tralireza/Demo/actions/workflows/pylint.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/pylint.yml)
 
 ### Build
 
