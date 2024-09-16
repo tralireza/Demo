@@ -12,14 +12,14 @@ def test_connect():
 
 
 def test_ifs():
-    rsp, status = m.ifs()
+    rsp, status, _ = m.ifs()
     print(rsp)
 
     assert status == 200
 
 
 def test_version():
-    rsp, status = m.version()
+    rsp, status, _ = m.version()
     print(rsp)
 
     assert 'Cisco IOS XR' in rsp

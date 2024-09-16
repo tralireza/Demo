@@ -27,24 +27,24 @@ def test_lifCreate(dispatcher):
 
     m.state.dryrun = True
     m.request = MyReq()
-    rpcXml, status = m.lifCreate()
+    rpcXml, status = m.lif_create()
 
     print(rpcXml)
 
     assert 'Loopback8118' in rpcXml
     assert 200 == status
 
-    assert 'message-id="2"' in m.lifCreate()[0]
-    assert 'message-id="3"' in m.lifCreate()[0]
+    assert 'message-id="2"' in m.lif_create()[0]
+    assert 'message-id="3"' in m.lif_create()[0]
 
     m.state.dryrun = False
-    print(m.lifCreate())
+    print(m.lif_create())
 
 
 def test_lifDelete(dispatcher):
     m.state.dryrun = True
-    assert 'Loopback8118' in m.lifDelete(8118)[0]
+    assert 'Loopback8118' in m.lif_delete(8118)[0]
 
     m.state.dryrun = False
     m.dispatcher = dispatcher
-    print(m.lifDelete(8118))
+    print(m.lif_delete(8118))

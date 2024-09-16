@@ -1,5 +1,10 @@
+"""
+Main Flask module in charge of wiring up the application and setting up API routes, also
+initializes Cli and NC modules with env imported parameters
+"""
 import json
 import logging
+import sys
 
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -24,26 +29,35 @@ app.register_blueprint(cli.bp)
 appConfig = env.appConfig
 
 if not nc.dispatcher.init(appConfig):
-    logger.critical('[NetConf] no connection possible: %s' % appConfig)
-    exit(-1)
+    logger.critical('[NetConf] no connection possible: %s', appConfig)
+    sys.exit(-1)
 
 if not cli.init(appConfig):
-    logger.critical('[Cli] no connection possible: %s' % appConfig)
-    exit(-1)
+    logger.critical('[Cli] no connection possible: %s', appConfig)
+    sys.exit(-1)
 
 
 @app.get('/config')
 def config():
+    """
+    return configuration environment parameters
+    """
     return json.dumps(appConfig, indent=2)
 
 
 @app.get('/alive')
 def alive():
+    """
+    api hearth-beat
+    """
     return json.dumps({"alive": True}, indent=2)
 
 
 @app.get('/dryrun')
 def dryrun():
+    """
+    toggle the state of dryrun when dispatching RPC to NetConf server
+    """
     nc.state.dryrun = not nc.state.dryrun
     return json.dumps({"dryrun": nc.state.dryrun}, indent=2)
 

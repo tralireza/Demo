@@ -1,3 +1,6 @@
+"""
+mainly CiscoDevNet IOS-XR Demo connection parameters...
+"""
 import os
 
 
