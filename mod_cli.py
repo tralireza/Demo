@@ -34,7 +34,7 @@ def init(appConfig):
 @bp.get('/ifs')  # ifs as interfaces (including Loopback)
 def ifs():
     try:
-        return mgr.send_command('show interfaces brief'), 200
+        return mgr.send_command('show interfaces brief'), 200, {'Content-Type': 'text/plain'}
     except Exception as e:
         logger.error(e)
         reset()
@@ -44,7 +44,7 @@ def ifs():
 @bp.get('/version')
 def version():
     try:
-        return mgr.send_command('show version'), 200
+        return mgr.send_command('show version'), 200, {'Content-Type': 'text/plain'}
     except Exception as e:
         logger.error(e)
         reset()
