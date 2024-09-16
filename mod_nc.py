@@ -20,7 +20,7 @@ class State:
         return self.seq
 
 
-bp = Blueprint('mod_nc', __name__, url_prefix='/netconf')
+bp = Blueprint('nc', __name__, url_prefix='/netconf')
 logger = logging.getLogger(__name__)
 state = State()
 
@@ -38,17 +38,15 @@ def lifCreate():
         return rpcXml, 200
 
     logger.debug(rpcXml)
+
     try:
         if dispatcher.dispatch(rpcXml):
             rpcXml = Payload[COMMIT] % state.Inc()
             if dispatcher.dispatch(rpcXml):
                 return '', 200
-
         return '', 400
-
     except Exception as e:
         logger.error(e)
-
     return '', 500
 
 
@@ -58,17 +56,14 @@ def lifDelete(number):
     if state.dryrun:
         return rpcXml, 200
 
-    try:
-        logger.debug(rpcXml)
+    logger.debug(rpcXml)
 
+    try:
         if dispatcher.dispatch(rpcXml):
             rpcXml = Payload[COMMIT] % state.Inc()
             if dispatcher.dispatch(rpcXml):
                 return '', 200
-
         return '', 400
-
     except Exception as e:
         logger.error(e)
-
     return '', 400

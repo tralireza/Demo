@@ -10,14 +10,13 @@ mgr, reset = None, None
 
 
 def init(appConfig):
-    global mgr
+    global reset
 
     def reset():
         """
         closure on appConfig to reset connecting in case of connection loss
         """
         global mgr
-
         mgr = None
         try:
             mgr = ConnectHandler(port=22,
@@ -25,14 +24,10 @@ def init(appConfig):
                                  username=appConfig['USR'],
                                  password=appConfig['PASSWD'],
                                  device_type='cisco_ios')
-
             logger.info('conntected to "%s"' % appConfig['HOST'])
-
         except Exception as e:
             logger.error(e)
-
         return mgr is not None
-
     return reset()
 
 
@@ -40,11 +35,9 @@ def init(appConfig):
 def ifs():
     try:
         return mgr.send_command('show interfaces brief'), 200
-
     except Exception as e:
         logger.error(e)
         reset()
-
     return '', 500
 
 
@@ -52,9 +45,7 @@ def ifs():
 def version():
     try:
         return mgr.send_command('show version'), 200
-
     except Exception as e:
         logger.error(e)
         reset()
-
     return '', 500

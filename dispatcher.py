@@ -21,7 +21,6 @@ def init(appConfig):
         closure on appConfig to reset/retry ncMgr in case of connection loss
         """
         global mgr
-
         mgr = None
         try:
             mgr = manager.connect(port=830, timeout=90,
@@ -30,14 +29,10 @@ def init(appConfig):
                                   password=appConfig['PASSWD'],
                                   hostkey_verify=False, allow_agent=False,
                                   device_params={'name': 'iosxr'})
-
             logger.info('connected to "%s"' % appConfig['HOST'])
-
         except Exception as e:
             logger.error(e)
-
         return mgr is not None
-
     return reset()
 
 
