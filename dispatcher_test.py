@@ -26,7 +26,6 @@ def test_connect(appConfig):
 
 
 def test_dispatch(appConfig):
-
     m.init(appConfig)
     assert m.dispatch('''
 <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="%i">

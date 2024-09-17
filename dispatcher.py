@@ -6,7 +6,7 @@ import logging
 import lxml.etree as et
 from ncclient import manager
 from ncclient.operations import RPCError
-from paramiko.ssh_exception import SSHException, AuthenticationException
+from ncclient.transport.errors import SSHError, AuthenticationError
 
 logger = logging.getLogger(__name__)
 
@@ -42,9 +42,9 @@ def init(config):
                                   hostkey_verify=False, allow_agent=False,
                                   device_params={'name': 'iosxr'})
             logger.info('connected to "%s"', config['HOST'])
-        except AuthenticationException as e:
+        except AuthenticationError as e:
             logger.error(e)
-        except SSHException as e:
+        except SSHError as e:
             logger.error(e)
         return mgr is not None
     return reset()
@@ -60,7 +60,7 @@ def dispatch(payload):
         return True
     except RPCError as e:
         rsp = e.xml
-    except SSHException as e:
+    except SSHError as e:
         logger.error(e)
         logger.info('reconnecting to remote host ...')
         reset()
