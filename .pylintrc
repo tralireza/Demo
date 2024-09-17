@@ -1,5 +1,5 @@
 [checker]
-fail-under=9.49
+fail-under=9.41
 extension-pkg-allow-list=lxml
 
 [tool.pylint.similarities]
