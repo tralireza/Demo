@@ -1,0 +1,6 @@
+[checker]
+fail-under=9.49
+extension-pkg-allow-list=lxml
+
+[tool.pylint.similarities]
+min-similarity-lines=7

@@ -19,9 +19,9 @@ def reset():
     """
 
 
-def init(appConfig):
+def init(config):
     """
-    initialise ncMgr adding a clousre to context to re-establish connection,
+    initialise "mgr" adding a clousre to context to re-establish connection,
     if need be...
     return True if connection to remote host is successful,
     otherwise False to fast-fail
@@ -36,12 +36,12 @@ def init(appConfig):
         mgr = None
         try:
             mgr = manager.connect(port=830, timeout=90,
-                                  host=appConfig['HOST'],
-                                  username=appConfig['USR'],
-                                  password=appConfig['PASSWD'],
+                                  host=config['HOST'],
+                                  username=config['USR'],
+                                  password=config['PASSWD'],
                                   hostkey_verify=False, allow_agent=False,
                                   device_params={'name': 'iosxr'})
-            logger.info('connected to "%s"', appConfig['HOST'])
+            logger.info('connected to "%s"', config['HOST'])
         except AuthenticationException as e:
             logger.error(e)
         except SSHException as e:
@@ -50,21 +50,21 @@ def init(appConfig):
     return reset()
 
 
-def dispatch(rpcXml):
+def dispatch(payload):
     """
-    send the rpc payload (sync), reset connection manager (ncMgr) on Exception
+    send RPC payload (sync) to NetConf server, reset connection manager on Exception
     """
-    logger.debug('dispatching RCP paylad -> %s', rpcXml)
+    logger.debug('dispatching RPC paylad -> %s', payload)
     try:
-        rsp = mgr.dispatch(et.fromstring(rpcXml)).xml
+        rsp = mgr.dispatch(et.fromstring(payload)).xml
         return True
     except RPCError as e:
         rsp = e.xml
     except SSHException as e:
         logger.error(e)
-        logger.info('trying to re-connect to remote host ...')
+        logger.info('reconnecting to remote host ...')
         reset()
-        raise SSHException()
+        raise e
 
     if et.iselement(rsp):
         rsp = et.tostring(rsp, pretty_print=True).decode()

@@ -1,7 +1,9 @@
 """
 NetConf module
 """
+import dataclasses
 import logging
+
 
 from flask import Blueprint, request
 from paramiko.ssh_exception import SSHException
@@ -10,6 +12,7 @@ import dispatcher
 from rpc_payload_cisco import (Payload, IF_CREATE, IF_DEL, COMMIT)
 
 
+@dataclasses.dataclass
 class State:
     """
     this module's state
@@ -38,21 +41,20 @@ def lif_create():
     jdata = request.get_json()
     number = jdata['number']
 
-    rpcXml = Payload[IF_CREATE] % (state.inc(), f'Loopback{number}')
+    payload = Payload[IF_CREATE] % (state.inc(), f'Loopback{number}')
     if state.dryrun:
-        return rpcXml, 200
+        return payload, 200
 
-    logger.debug(rpcXml)
+    logger.debug(payload)
 
     try:
-        if dispatcher.dispatch(rpcXml):
-            rpcXml = Payload[COMMIT] % state.inc()
-            if dispatcher.dispatch(rpcXml):
+        if dispatcher.dispatch(payload):
+            payload = Payload[COMMIT] % state.inc()
+            if dispatcher.dispatch(payload):
                 return '', 200
         return '', 400
-    except SSHException as e:
-        logger.error(e)
-    return '', 500
+    except SSHException:
+        return '', 504
 
 
 @bp.route('/lfs/<int:number>', methods=['DELETE'])
@@ -60,18 +62,17 @@ def lif_delete(number):
     """
     delete a loopback inteface
     """
-    rpcXml = Payload[IF_DEL] % (state.inc(), f'Loopback{number}')
+    payload = Payload[IF_DEL] % (state.inc(), f'Loopback{number}')
     if state.dryrun:
-        return rpcXml, 200
+        return payload, 200
 
-    logger.debug(rpcXml)
+    logger.debug(payload)
 
     try:
-        if dispatcher.dispatch(rpcXml):
-            rpcXml = Payload[COMMIT] % state.inc()
-            if dispatcher.dispatch(rpcXml):
+        if dispatcher.dispatch(payload):
+            payload = Payload[COMMIT] % state.inc()
+            if dispatcher.dispatch(payload):
                 return '', 200
         return '', 400
-    except SSHException as e:
-        logger.error(e)
-    return '', 400
+    except SSHException:
+        return '', 504

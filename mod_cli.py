@@ -20,7 +20,7 @@ def reset():
     """
 
 
-def init(appConfig):
+def init(config):
     """
     initialize the connection and update the closure reset() for retry later
     """
@@ -39,11 +39,11 @@ def init(appConfig):
         mgr = None
         try:
             mgr = ConnectHandler(port=22,
-                                 host=appConfig['HOST'],
-                                 username=appConfig['USR'],
-                                 password=appConfig['PASSWD'],
+                                 host=config['HOST'],
+                                 username=config['USR'],
+                                 password=config['PASSWD'],
                                  device_type='cisco_ios')
-            logger.info('conntected to "%s"', appConfig['HOST'])
+            logger.info('conntected to "%s"', config['HOST'])
         except AuthenticationException as e:
             logger.error(e)
         except SSHException as e:
