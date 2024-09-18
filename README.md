@@ -15,15 +15,18 @@ $ docker compose up
 ## REST endpoints
 
 ```bash
-Endpoint          Methods  Rule
-----------------  -------  -------------------------
-alive             GET      /alive
-cli.ifs           GET      /cli/ifs
-cli.version       GET      /cli/version
-config            GET      /config
-dryrun            GET      /dryrun
-mod_nc.lif_create POST     /netconf/lfs
-mod_nc.lif_delete DELETE   /netconf/lfs/<int:number>
+$ flask routes
+2024-09-18 14:31:08,698|starting...
+2024-09-18 14:31:13,357|ready...
+Endpoint       Methods  Rule                     
+-------------  -------  -------------------------
+alive          GET      /alive                   
+cli.ifs        GET      /cli/ifs                 
+cli.version    GET      /cli/version             
+config         GET      /config                  
+dryrun         GET      /dryrun                  
+nc.lif_create  POST     /netconf/lfs             
+nc.lif_delete  DELETE   /netconf/lfs/<int:number>
 ```
 
 ## Access (cli)
