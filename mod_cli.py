@@ -2,6 +2,7 @@
 in charge of CLI conversation with a Cisco IOS device.
 Keeps connection open and retry if it drops.
 """
+
 import logging
 
 from flask import Blueprint

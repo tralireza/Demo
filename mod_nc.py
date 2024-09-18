@@ -1,9 +1,9 @@
 """
 NetConf module
 """
+
 import dataclasses
 import logging
-
 
 from flask import Blueprint, request
 from paramiko.ssh_exception import SSHException
@@ -19,6 +19,7 @@ class State:
     dryrun: return early without calling dispatcher
     seq: number of RPCs sent via dispatcher
     """
+
     def __init__(self, seq=0, dryrun=True):
         self.seq, self.dryrun = seq, dryrun
 

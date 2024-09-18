@@ -1,4 +1,4 @@
-# NetConf Demo [![NetConf/Cli Demo](https://github.com/tralireza/Demo/actions/workflows/python-app.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/python-app.yml) [![Pylint](https://github.com/tralireza/Demo/actions/workflows/pylint.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/pylint.yml) [![Docker Image](https://github.com/tralireza/Demo/actions/workflows/docker-image.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/docker-image.yml)
+# NetConf/Cli Demo [![NetConf/Cli Demo](https://github.com/tralireza/Demo/actions/workflows/python-app.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/python-app.yml) [![Pylint](https://github.com/tralireza/Demo/actions/workflows/pylint.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/pylint.yml) [![Docker Image](https://github.com/tralireza/Demo/actions/workflows/docker-image.yml/badge.svg)](https://github.com/tralireza/Demo/actions/workflows/docker-image.yml)
 
 ### Build
 
