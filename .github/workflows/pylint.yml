@@ -21,4 +21,4 @@ jobs:
         pip install -r requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pylint env.py app.py dispatcher.py mod_nc.py mod_cli.py
+        pylint *.py 

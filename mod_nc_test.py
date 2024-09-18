@@ -27,7 +27,7 @@ def test_lifCreate(dispatcher):
 
     m.state.dryrun = True
     m.request = MyReq()
-    rpcXml, status = m.lif_create()
+    rpcXml, status, _ = m.lif_create()
 
     print(rpcXml)
 

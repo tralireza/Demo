@@ -43,7 +43,7 @@ def lif_create():
 
     payload = Payload[IF_CREATE] % (state.inc(), f'Loopback{number}')
     if state.dryrun:
-        return payload, 200
+        return payload, 200, {"content-type": "text/xml"}
 
     logger.debug(payload)
 
@@ -64,7 +64,7 @@ def lif_delete(number):
     """
     payload = Payload[IF_DEL] % (state.inc(), f'Loopback{number}')
     if state.dryrun:
-        return payload, 200
+        return payload, 200, {"content-type": "text/xml"}
 
     logger.debug(payload)
 
