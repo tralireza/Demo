@@ -30,9 +30,10 @@ def init(config):
 
     def reset():
         """
-        closure on appConfig to reset/retry ncMgr in case of connection loss
+        closure on appConfig to reset/retry "mgr" in case of connection loss
         """
         global mgr
+
         mgr = None
         try:
             mgr = manager.connect(port=830, timeout=90,
@@ -42,9 +43,7 @@ def init(config):
                                   hostkey_verify=False, allow_agent=False,
                                   device_params={'name': 'iosxr'})
             logger.info('connected to "%s"', config['HOST'])
-        except AuthenticationError as e:
-            logger.error(e)
-        except SSHError as e:
+        except (AuthenticationError, SSHError, Exception) as e:
             logger.error(e)
         return mgr is not None
     return reset()
@@ -60,7 +59,7 @@ def dispatch(payload):
         return True
     except RPCError as e:
         rsp = e.xml
-    except SSHError as e:
+    except (SSHError, OSError, Exception) as e:
         logger.error(e)
         logger.info('reconnecting to remote host ...')
         reset()

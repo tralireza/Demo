@@ -54,7 +54,7 @@ def lif_create():
             if dispatcher.dispatch(payload):
                 return '', 200
         return '', 400
-    except SSHException:
+    except (SSHException, Exception):
         return '', 504
 
 
@@ -75,5 +75,5 @@ def lif_delete(number):
             if dispatcher.dispatch(payload):
                 return '', 200
         return '', 400
-    except SSHException:
+    except (SSHException, Exception):
         return '', 504

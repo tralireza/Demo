@@ -27,8 +27,7 @@ def test_connect(appConfig):
 
 def test_dispatch(appConfig):
     m.init(appConfig)
-    assert m.dispatch('''
-<edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="%i">
+    assert m.dispatch('''<edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="%i">
   <target>
     <candidate/>
   </target>
@@ -36,9 +35,20 @@ def test_dispatch(appConfig):
     <interfaces xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-um-interface-cfg">
       <interface>
         <interface-name>Loopback%i</interface-name>
-        <description>*** NC.py ***</description>
       </interface>
     </interfaces>
   </config>
-</edit-config>
-''' % (1234, 9191)) is True
+</edit-config>''' % (1001, 9191)) is True
+
+
+def test_reconnect():
+    try:
+        m.mgr.close_session()
+    except Exception as e:
+        print(e)
+
+    try:
+        m.dispatch('''<commit xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="1001" />''') is False
+        assert False
+    except Exception:
+        assert True

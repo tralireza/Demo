@@ -24,3 +24,15 @@ def test_version():
 
     assert 'Cisco IOS XR' in rsp
     assert status == 200
+
+
+def test_reconnect():
+    try:
+        m.mgr.disconnect()
+    except Exception as e:
+        print(e)
+
+    _, status = m.version()
+    assert status == 504
+    _, status, _ = m.version()
+    assert status == 200

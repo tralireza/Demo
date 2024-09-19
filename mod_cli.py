@@ -35,8 +35,8 @@ def init(config):
         if mgr:
             try:
                 mgr.disconnect()
-            except SSHException:
-                pass
+            except (SSHException, OSError) as e:
+                logger.error(e)
         mgr = None
         try:
             mgr = ConnectHandler(port=22,
@@ -47,7 +47,7 @@ def init(config):
             logger.info('conntected to "%s"', config['HOST'])
         except AuthenticationException as e:
             logger.error(e)
-        except SSHException as e:
+        except (SSHException, OSError) as e:
             logger.error(e)
         return mgr is not None
     return reset()
@@ -60,7 +60,7 @@ def ifs():
     """
     try:
         return mgr.send_command('show interfaces brief'), 200, {'Content-Type': 'text/plain'}
-    except SSHException as e:
+    except (SSHException, OSError) as e:
         logger.error(e)
         reset()
     return '', 504
@@ -73,7 +73,7 @@ def version():
     """
     try:
         return mgr.send_command('show version'), 200, {'Content-Type': 'text/plain'}
-    except SSHException as e:
+    except (SSHException, OSError) as e:
         logger.error(e)
         reset()
     return '', 504
