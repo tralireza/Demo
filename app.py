@@ -29,11 +29,11 @@ app.register_blueprint(cli.bp)
 appConfig = env.appConfig
 
 if not nc.dispatcher.init(appConfig):
-    logger.critical('[NetConf] no connection possible: %s', appConfig)
+    logger.critical('(nc) no connection possible: %s', appConfig)
     sys.exit(-1)
 
 if not cli.init(appConfig):
-    logger.critical('[Cli] no connection possible: %s', appConfig)
+    logger.critical('(cli) no connection possible: %s', appConfig)
     sys.exit(-1)
 
 
