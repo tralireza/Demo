@@ -6,6 +6,7 @@ import dataclasses
 import logging
 
 from flask import Blueprint, request
+from ncclient.transport.errors import TransportError
 from paramiko.ssh_exception import SSHException
 
 import dispatcher
@@ -54,7 +55,7 @@ def lif_create():
             if dispatcher.dispatch(payload):
                 return '', 200
         return '', 400
-    except (SSHException, Exception):
+    except (SSHException, TransportError):
         return '', 504
 
 
@@ -75,5 +76,5 @@ def lif_delete(number):
             if dispatcher.dispatch(payload):
                 return '', 200
         return '', 400
-    except (SSHException, Exception):
+    except (SSHException, TransportError):
         return '', 504

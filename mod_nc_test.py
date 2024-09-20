@@ -48,3 +48,13 @@ def test_lifDelete(dispatcher):
     m.state.dryrun = False
     m.dispatcher = dispatcher
     print(m.lif_delete(8118))
+
+
+def test_reconnect(dispatcher):
+    dispatcher.mgr.close_session()
+
+    m.state.dryrun = False
+    m.dispatcher = dispatcher
+
+    _, status = m.lif_delete(8118)
+    assert status == 504

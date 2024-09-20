@@ -1,6 +1,6 @@
 [tool.pylint.checker]
 extension-pkg-allow-list = ["lxml"]
-fail-under = 9.21
+fail-under = 9.41
 ignore-patterns = [".*_test.py"]
 
 [tool.pylint.similarities]

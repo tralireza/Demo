@@ -6,7 +6,7 @@ import logging
 import lxml.etree as et
 from ncclient import manager
 from ncclient.operations import RPCError
-from ncclient.transport.errors import SSHError, AuthenticationError
+from ncclient.transport.errors import SSHError, AuthenticationError, TransportError
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ def init(config):
                                   hostkey_verify=False, allow_agent=False,
                                   device_params={'name': 'iosxr'})
             logger.info('connected to "%s"', config['HOST'])
-        except (AuthenticationError, SSHError, Exception) as e:
+        except (AuthenticationError, SSHError, TransportError) as e:
             logger.error(e)
         return mgr is not None
     return reset()
@@ -59,7 +59,7 @@ def dispatch(payload):
         return True
     except RPCError as e:
         rsp = e.xml
-    except (SSHError, OSError, Exception) as e:
+    except (SSHError, TransportError) as e:
         logger.error(e)
         logger.info('reconnecting to remote host ...')
         reset()

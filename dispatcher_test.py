@@ -50,5 +50,6 @@ def test_reconnect():
     try:
         m.dispatch('''<commit xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="1001" />''') is False
         assert False
-    except Exception:
+    except Exception as e:
+        print("->", type(e).__name__, "::", e)
         assert True

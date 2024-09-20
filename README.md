@@ -207,12 +207,12 @@ System uptime is 1 week 5 days 17 hours 18 minutes
 platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
 rootdir: /Users/alireza/python/Sky
 configfile: pyproject.toml
-collected 10 items
+collected 13 items
 
-app_test.py ...                                                          [ 30%]
-dispatcher_test.py ..                                                    [ 50%]
-mod_cli_test.py ...                                                      [ 80%]
-mod_nc_test.py ..                                                        [100%]
+app_test.py ...                                                          [ 23%]
+dispatcher_test.py ...                                                   [ 46%]
+mod_cli_test.py ....                                                     [ 76%]
+mod_nc_test.py ...                                                       [100%]
 
-============================= 10 passed in 21.39s ==============================
+============================= 13 passed in 31.31s ==============================
 ```
